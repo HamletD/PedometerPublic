@@ -67,14 +67,7 @@ class HealthManager {
             if completion != nil {
                 completion(mostRecentSample,nil)
             }
-             print(results)
             
-            
-            
-            
-            
-            /*
-            //enable background query for continuous update
             self.healthStore.enableBackgroundDeliveryForType(sampleType, frequency: HKUpdateFrequency.Immediate, withCompletion:
                 { (succeeded, error) -> Void in
                     if succeeded{
@@ -83,7 +76,6 @@ class HealthManager {
                         print("Background delivery denied")
                     }
             })
-            */
         }
         //excute query
         healthStore.executeQuery(sampleQuery)

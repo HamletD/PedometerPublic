@@ -50,16 +50,15 @@ class ViewController: UIViewController {
             
             stepSample = mostRecentSample as? HKQuantitySample
             self.localizedStepDouble = (stepSample?.quantity.doubleValueForUnit(HKUnit.countUnit()))!
-            self.reloadUI()
+            
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                self.reloadUI()
+            })
         }
-        
-        
     }
     func reloadUI(){
         self.stepsTakenLabel.text = "\(self.localizedStepDouble)"
         loadingWheel.hidden = true
     }
-
-
 }
 
