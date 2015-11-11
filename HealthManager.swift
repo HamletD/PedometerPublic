@@ -70,6 +70,25 @@ class HealthManager {
         //excute query
         healthStore.executeQuery(sampleQuery)
     }
+    
+    func updateHealthData() -> Double{
+        //create sample type & local double
+        
+        let sampleType = HKSampleType.quantityTypeForIdentifier(HKQuantityTypeIdentifierStepCount)
+        var localizedStepDouble: Double = 0.0
+        var stepSample: HKQuantitySample?
+        
+        //excute query
+        backgroundQuery(sampleType!) { (mostRecentSample, error) -> Void in
+            if(error != nil){
+                print("Error in background query")
+            }
+            stepSample = mostRecentSample as? HKQuantitySample
+            localizedStepDouble = (stepSample?.quantity.doubleValueForUnit(HKUnit.countUnit()))!
+            
+        }
+        return localizedStepDouble
+    }
 
 }
 
