@@ -24,11 +24,16 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="aSS-Rq-CFE">
+                                <rect key="frame" x="145" y="302" width="20" height="20"/>
+                                <animations/>
+                            </activityIndicatorView>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <connections>
+                        <outlet property="loadingWheel" destination="aSS-Rq-CFE" id="GkQ-bk-TKl"/>
                         <outlet property="stepsTakenLabel" destination="e1n-2x-qlM" id="hXd-jt-Nzl"/>
                     </connections>
                 </viewController>

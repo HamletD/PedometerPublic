@@ -12,6 +12,7 @@ import HealthKit
 
 
 class HealthManager {
+    var steps: Double = 0.0
     
     let healthStore: HKHealthStore = HKHealthStore()
     //needs an init method that asks for authorization
@@ -50,13 +51,29 @@ class HealthManager {
     }
     
     func backgroundQuery(sampleType:HKSampleType , completion: ((HKSample!, NSError!) -> Void)!){
-        
         //build query type
         let sampleQuery = HKSampleQuery(sampleType: sampleType, predicate: nil, limit: 100, sortDescriptors: nil) {
             (sampleQuery, results, error) -> Void in
-            if (error != nil) {
-                completion(nil, error)
+            /*
+            if let queryError = error {
+                completion(nil,error)
+                return;
             }
+            */
+            // Get the first sample
+            let mostRecentSample = results!.last as? HKQuantitySample
+            
+            // Execute the completion closure
+            if completion != nil {
+                completion(mostRecentSample,nil)
+            }
+             print(results)
+            
+            
+            
+            
+            
+            /*
             //enable background query for continuous update
             self.healthStore.enableBackgroundDeliveryForType(sampleType, frequency: HKUpdateFrequency.Immediate, withCompletion:
                 { (succeeded, error) -> Void in
@@ -66,29 +83,13 @@ class HealthManager {
                         print("Background delivery denied")
                     }
             })
+            */
         }
         //excute query
         healthStore.executeQuery(sampleQuery)
     }
     
-    func updateHealthData() -> Double{
-        //create sample type & local double
-        
-        let sampleType = HKSampleType.quantityTypeForIdentifier(HKQuantityTypeIdentifierStepCount)
-        var localizedStepDouble: Double = 0.0
-        var stepSample: HKQuantitySample?
-        
-        //excute query
-        backgroundQuery(sampleType!) { (mostRecentSample, error) -> Void in
-            if(error != nil){
-                print("Error in background query")
-            }
-            stepSample = mostRecentSample as? HKQuantitySample
-            localizedStepDouble = (stepSample?.quantity.doubleValueForUnit(HKUnit.countUnit()))!
-            
-        }
-        return localizedStepDouble
-    }
+       
 
 }
 
